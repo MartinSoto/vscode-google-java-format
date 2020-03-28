@@ -1,21 +1,38 @@
-import * as vscode from "vscode";
+import {
+    ExtensionContext,
+    TextDocument,
+    Range,
+    TextEdit,
+    languages,
+} from "vscode";
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: ExtensionContext) {
     console.log('Activating extension "google-java-format"');
 
-    vscode.languages.registerDocumentFormattingEditProvider("foo-lang", {
-        provideDocumentFormattingEdits(
-            document: vscode.TextDocument
-        ): vscode.TextEdit[] {
-            const firstLine = document.lineAt(0);
-            if (firstLine.text !== "42") {
-                return [vscode.TextEdit.insert(firstLine.range.start, "42\n")];
-            }
+    function fullDocumentRange(document: TextDocument): Range {
+        const lastLineId = document.lineCount - 1;
+        return new Range(
+            0,
+            0,
+            lastLineId,
+            document.lineAt(lastLineId).text.length
+        );
+    }
 
-            return [];
+    languages.registerDocumentFormattingEditProvider("foo-lang", {
+        provideDocumentFormattingEdits(document: TextDocument): TextEdit[] {
+            return [
+                TextEdit.replace(
+                    fullDocumentRange(document),
+                    "Yeah!\n" +
+                        document
+                            .getText()
+                            .replace("xx", "\nlots\nof\nlines\n") +
+                        "\nYass!"
+                ),
+            ];
         },
     });
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}
