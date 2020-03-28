@@ -9,15 +9,20 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onCommand:extension.helloWorld"
-	],
+    "activationEvents": [
+        "onLanguage:foo-lang"
+    ],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
+		"languages": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"id": "foo-lang",
+				"aliases": [
+					"Foo"
+				],
+				"extensions": [
+					"foo"
+				]
 			}
 		]
 	},
