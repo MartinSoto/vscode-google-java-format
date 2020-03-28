@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+
+  devshell:
+    image: vscode-ext-devshell
+    build:
+      context: .
+    volumes:
+      - ${PWD}/..:${PWD}/..
+      - ~:/root/hosthome
+      - /var/run/docker.sock:/var/run/docker.sock
+      - vscode-data:/root/.vscode-server
+      - user-persistent-data:/root/.persistent-data
+      - gradle-data:/root/.gradle
+    environment:
+      SHELL: /bin/bash
+      HISTFILE: /root/.persistent-data/bash_history
+    command: sleep infinity
+
+volumes:
+  vscode-data:
+    name: devshell-vscode-data
+
+  user-persistent-data:
+    name: devshell-user-persistent-data
+
+  gradle-data:
+    name: devshell-gradle-data
+
+networks:
+  default:
+    name: aio-streams-network
