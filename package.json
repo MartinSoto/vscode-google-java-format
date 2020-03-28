@@ -34,6 +34,9 @@
 		"pretest": "yarn run compile && yarn run lint",
 		"test": "node ./out/test/runTest.js"
 	},
+	"prettier": {
+		"tabWidth": 4
+	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.1",
