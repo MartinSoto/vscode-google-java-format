@@ -20,7 +20,9 @@ export function activate(context: ExtensionContext) {
     }
 
     languages.registerDocumentFormattingEditProvider("foo-lang", {
-        provideDocumentFormattingEdits(document: TextDocument): TextEdit[] {
+        async provideDocumentFormattingEdits(
+            document: TextDocument
+        ): Promise<TextEdit[]> {
             return [
                 TextEdit.replace(
                     fullDocumentRange(document),
