@@ -6,9 +6,11 @@ chai.use(chaiAsPromised);
 chai.should();
 
 describe("subproc", function () {
-    describe("#runProcess()", function () {
-        it("should return Yeah!", function () {
-            return sut.runProcess("ze input").should.eventually.equal("Yeah!");
+    describe("#runCommand()", function () {
+        it("should correctly run wc on input", function () {
+            return sut
+                .runCommand("ze\ninput", "wc", ["-c"])
+                .should.eventually.equal("8\n");
         });
     });
 });
