@@ -33,7 +33,7 @@
 		"watch": "tsc -watch -p ./",
 		"test": "mocha -r ts-node/register src/test/*.test.ts",
 		"preinttest": "yarn run compile && yarn run lint",
-		"inttest": "node ./out/test/runTest.js"
+		"inttest": "node ./out/integration/runTest.js"
 	},
 	"prettier": {
 		"tabWidth": 4
