@@ -1,10 +1,11 @@
 import {
     ExtensionContext,
-    TextDocument,
-    Range,
-    TextEdit,
     languages,
+    Range,
+    TextDocument,
+    TextEdit,
 } from "vscode";
+import { runCommand } from "./subproc";
 
 export function activate(context: ExtensionContext) {
     console.log('Activating extension "google-java-format"');
@@ -19,19 +20,20 @@ export function activate(context: ExtensionContext) {
         );
     }
 
-    languages.registerDocumentFormattingEditProvider("foo-lang", {
+    languages.registerDocumentFormattingEditProvider("java", {
         async provideDocumentFormattingEdits(
             document: TextDocument
         ): Promise<TextEdit[]> {
+            const documentText = document.getText();
+            const formattedText = await runCommand(documentText, "java", [
+                "-jar",
+                "/Users/msoto/Desktop/Projects/vscode-google-java-format/google-java-format-1.7-all-deps.jar",
+                "--aosp",
+                "-",
+            ]);
+
             return [
-                TextEdit.replace(
-                    fullDocumentRange(document),
-                    "Yeah!\n" +
-                        document
-                            .getText()
-                            .replace("xx", "\nlots\nof\nlines\n") +
-                        "\nYass!"
-                ),
+                TextEdit.replace(fullDocumentRange(document), formattedText),
             ];
         },
     });

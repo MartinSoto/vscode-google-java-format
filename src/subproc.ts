@@ -7,6 +7,7 @@ export function runCommand(
     args?: string[],
     options?: SpawnOptionsWithoutStdio
 ): Promise<string> {
+    // https://stackoverflow.com/a/49428486/580201
     return new Promise(function (resolve, reject) {
         const inputStream = new Readable();
         inputStream.push(input);

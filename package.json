@@ -10,22 +10,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onLanguage:foo-lang"
+		"onLanguage:java"
 	],
 	"main": "./out/extension.js",
-	"contributes": {
-		"languages": [
-			{
-				"id": "foo-lang",
-				"aliases": [
-					"Foo"
-				],
-				"extensions": [
-					"foo"
-				]
-			}
-		]
-	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",
 		"compile": "tsc -p ./",
