@@ -36,9 +36,16 @@ export function activate(context: ExtensionContext) {
                 ]
             );
 
-            return [
-                TextEdit.replace(fullDocumentRange(document), formattedText),
-            ];
+            if (returnCode === 0) {
+                return [
+                    TextEdit.replace(
+                        fullDocumentRange(document),
+                        formattedText
+                    ),
+                ];
+            } else {
+                return [];
+            }
         },
     });
 }
