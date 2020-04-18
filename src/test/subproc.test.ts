@@ -11,5 +11,11 @@ describe("subproc", function () {
             const output = await sut.runCommand("ze\ninput", "wc", ["-c"]);
             output.should.equal("8\n");
         });
+
+        it("should throw an exception if command not found", () => {
+            return sut
+                .runCommand("ze\ninput", "kkqq", [])
+                .should.eventually.be.rejectedWith();
+        });
     });
 });

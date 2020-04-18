@@ -14,6 +14,8 @@ export function runCommand(
         inputStream.push(null);
 
         const proc = spawn(command, args, options);
+        proc.on("error", reject);
+
         inputStream.pipe(proc.stdin);
 
         const chunks: Buffer[] = [];
