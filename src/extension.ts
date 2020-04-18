@@ -25,12 +25,16 @@ export function activate(context: ExtensionContext) {
             document: TextDocument
         ): Promise<TextEdit[]> {
             const documentText = document.getText();
-            const formattedText = await runCommand(documentText, "java", [
-                "-jar",
-                "/Users/msoto/Desktop/Projects/vscode-google-java-format/google-java-format-1.7-all-deps.jar",
-                "--aosp",
-                "-",
-            ]);
+            const [returnCode, formattedText] = await runCommand(
+                documentText,
+                "java",
+                [
+                    "-jar",
+                    "/Users/msoto/Desktop/Projects/vscode-google-java-format/google-java-format-1.7-all-deps.jar",
+                    "--aosp",
+                    "-",
+                ]
+            );
 
             return [
                 TextEdit.replace(fullDocumentRange(document), formattedText),

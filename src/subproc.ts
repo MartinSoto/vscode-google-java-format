@@ -6,7 +6,7 @@ export function runCommand(
     command: string,
     args?: string[],
     options?: SpawnOptionsWithoutStdio
-): Promise<string> {
+): Promise<[number, string]> {
     // https://stackoverflow.com/a/49428486/580201
     return new Promise(function (resolve, reject) {
         const inputStream = new Readable();
@@ -21,8 +21,13 @@ export function runCommand(
         const chunks: Buffer[] = [];
         proc.stdout.on("data", (chunk) => chunks.push(chunk));
         proc.stdout.on("error", reject);
-        proc.stdout.on("end", () =>
-            resolve(Buffer.concat(chunks).toString("utf8"))
-        );
+
+        proc.on("exit", (returnCode, signal) => {
+            if (returnCode !== null) {
+                resolve([returnCode, Buffer.concat(chunks).toString("utf8")]);
+            } else {
+                reject(new Error(`Program terminated with signal '${signal}`));
+            }
+        });
     });
 }

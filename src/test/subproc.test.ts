@@ -9,7 +9,12 @@ describe("subproc", function () {
     describe("#runCommand()", function () {
         it("should correctly run wc on input", async () => {
             const output = await sut.runCommand("ze\ninput", "wc", ["-c"]);
-            output.should.equal("8\n");
+            output.should.deep.equal([0, "8\n"]);
+        });
+
+        it("should return error code of failing command", async () => {
+            const output = await sut.runCommand("ze\ninput", "grep", ["xxx"]);
+            output.should.deep.equal([1, ""]);
         });
 
         it("should throw an exception if command not found", () => {
